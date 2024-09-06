@@ -10,13 +10,17 @@
     "lint": "eslint ."
   },
   "dependencies": {
+    "@types/lodash": "^4.17.7",
+    "dayjs": "^1.11.13",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.2.1",
     "expo": "~51.0.28",
     "expo-av": "~14.0.7",
     "expo-file-system": "~17.0.1",
     "expo-linear-gradient": "~13.0.2",
+    "expo-splash-screen": "~0.27.5",
     "expo-status-bar": "~1.12.1",
+    "lodash": "^4.17.21",
     "nativewind": "^2.0.11",
     "prettier": "^3.3.3",
     "react": "18.2.0",
