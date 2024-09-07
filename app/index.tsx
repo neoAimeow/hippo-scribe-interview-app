@@ -35,11 +35,9 @@ export default function Home() {
                 </View>
                 <View className={'w-full flex-grow flex items-center justify-center'}>
                     <Text className={'text-3xl text-white'}>
-                        {recordingState === RecordingStateEnum.RECORDING
-                            ? dayjs(durationMills).format('mm:ss')
-                            : '00:00'}
+                        {recordingState !== RecordingStateEnum.IDLE ? dayjs(durationMills).format('mm:ss') : '00:00'}
                     </Text>
-                    <View className={'mt-[30px]'}>
+                    <View className={'mt-[30px] w-full flex justify-center items-center'}>
                         {recordingState === RecordingStateEnum.IDLE ? (
                             <OptionButton type={ButtonOption.MIC} onPress={startRecording} />
                         ) : (
