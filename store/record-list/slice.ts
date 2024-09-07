@@ -26,17 +26,23 @@ export const createListSlice: StateCreator<
             const parsedList = JSON.parse(list);
             set({ list: { list: parsedList } });
             return parsedList;
-        } catch (ex) {}
+        } catch (ex) {
+            Toast.show('parse json failed');
+        }
     },
     addRecord: async (record: z.infer<typeof recordSchema>) => {
-        // TODO: zod parse
-        const list = cloneDeep(get().list.list);
-        list.push(record);
         try {
-            await AsyncStorage.setItem(LIST_KEY, JSON.stringify(list));
-            set({ list: { list } });
-        } catch (e) {
-            Toast.show('save data failed');
+            const data = recordSchema.parse(record);
+            const list = cloneDeep(get().list.list);
+            list.push(data);
+            try {
+                await AsyncStorage.setItem(LIST_KEY, JSON.stringify(list));
+                set({ list: { list } });
+            } catch (e) {
+                Toast.show('save data failed');
+            }
+        } catch (ex) {
+            Toast.show('parse schema failed');
         }
     },
     removeRecord: async (id: string) => {

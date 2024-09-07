@@ -17,8 +17,9 @@ make ios
 
 * This demo is built using Expo and can currently run on the Expo Go app.
 * The project uses Bun and Make as its execution tools, and Bun's superior performance makes it very worthwhile to use.
-* In this project, I used zustand to manage the state for recording audios and the audio's list. Operations such
-  as starting and stopping the recording are encapsulated within Zustand's slices, with operations like starting and
-  stopping the recording encapsulated within zustand's slices. This approach helps to better separate the UI from the
+*
+* In this project, I used zustand to manage the state for recording audios and the audio's list. with operations like
+  starting and stopping the recording encapsulated within zustand's slices. This approach helps to better separate the
+  UI from the
   logic.
 
