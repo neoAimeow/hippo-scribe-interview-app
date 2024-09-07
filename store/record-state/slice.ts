@@ -48,6 +48,7 @@ export const createStateSlice: StateCreator<
             console.log('Recording started');
         } catch (err) {
             console.error('Failed to start recording', err);
+            Toast.show('Failed to start recording');
             set(draft => {
                 draft.state.recordingState = RecordingStateEnum.IDLE;
             });
