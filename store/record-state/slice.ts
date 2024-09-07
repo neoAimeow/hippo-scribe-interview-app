@@ -33,7 +33,14 @@ export const createStateSlice: StateCreator<
             });
 
             console.log('Starting recording..');
-            const { recording } = await Audio.Recording.createAsync(Audio.RecordingOptionsPresets.HIGH_QUALITY);
+            const { recording } = await Audio.Recording.createAsync(
+                Audio.RecordingOptionsPresets.HIGH_QUALITY,
+                (status: Audio.RecordingStatus) => {
+                    set(draft => {
+                        draft.state.durationMills = status.durationMillis;
+                    });
+                },
+            );
             set(draft => {
                 draft.state.recording = recording;
                 draft.state.recordingState = RecordingStateEnum.RECORDING;
@@ -46,7 +53,6 @@ export const createStateSlice: StateCreator<
             });
         }
     },
-
     stopRecording: async () => {
         const recording = get().state.recording;
         if (recording) {

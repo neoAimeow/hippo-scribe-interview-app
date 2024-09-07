@@ -10,8 +10,7 @@ export enum RecordingStateEnum {
 export const MicState = z.object({
     recording: z.custom<Audio.Recording>().optional(),
     recordingState: z.nativeEnum(RecordingStateEnum),
-    startTime: z.number().optional(),
-    elapsedTime: z.number(),
+    durationMills: z.number(),
 });
 
 export interface MicStateSliceType {

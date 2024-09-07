@@ -9,23 +9,18 @@ import { router } from 'expo-router';
 import dayjs from 'dayjs';
 
 export default function Home() {
-    const [recordingState, startRecording, stopRecording, pauseRecording, resumeRecording, timer] = useRecordStore(
-        s => [
+    const [recordingState, startRecording, stopRecording, pauseRecording, resumeRecording, durationMills] =
+        useRecordStore(s => [
             s.state.recordingState,
             s.startRecording,
             s.stopRecording,
             s.pauseRecording,
             s.resumeRecording,
-            s.state.timer,
-        ],
-    );
+            s.state.durationMills,
+        ]);
 
     const goList = useCallback(() => {
         router.push('/list');
-    }, []);
-
-    useEffect(() => {
-        console.log(timer.getTimeRemaining());
     }, []);
 
     return (
@@ -40,9 +35,9 @@ export default function Home() {
                 </View>
                 <View className={'w-full flex-grow flex items-center justify-center'}>
                     <Text className={'text-3xl text-white'}>
-                        {/*{recordingState === RecordingStateEnum.RECORDING*/}
-                        {/*    ? dayjs(new Date()).diff(dayjs(countDownStartTime), 'second')*/}
-                        {/*    : '00:00'}*/}
+                        {recordingState === RecordingStateEnum.RECORDING
+                            ? dayjs(durationMills).format('mm:ss')
+                            : '00:00'}
                     </Text>
                     <View className={'mt-[30px]'}>
                         {recordingState === RecordingStateEnum.IDLE ? (
