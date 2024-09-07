@@ -45,13 +45,13 @@ export const createStateSlice: StateCreator<
     },
 
     stopRecording: async () => {
-        set(draft => {
-            draft.state.recording = undefined;
-            draft.state.recordingState = RecordingStateEnum.IDLE;
-        });
         const recording = get().state.recording;
         if (recording) {
             await recording.stopAndUnloadAsync();
+            set(draft => {
+                draft.state.recording = undefined;
+                draft.state.recordingState = RecordingStateEnum.IDLE;
+            });
             await Audio.setAudioModeAsync({
                 allowsRecordingIOS: false,
             });
@@ -60,12 +60,21 @@ export const createStateSlice: StateCreator<
         }
     },
     pauseRecording: async () => {
-        set(draft => {
-            draft.state.recordingState = RecordingStateEnum.PAUSED;
-        });
         const recording = get().state.recording;
         if (recording) {
             await recording.pauseAsync();
+            set(draft => {
+                draft.state.recordingState = RecordingStateEnum.PAUSED;
+            });
+        }
+    },
+    resumeRecording: async () => {
+        const recording = get().state.recording;
+        if (recording) {
+            await recording.startAsync();
+            set(draft => {
+                draft.state.recordingState = RecordingStateEnum.RECORDING;
+            });
         }
     },
 });

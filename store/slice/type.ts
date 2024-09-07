@@ -17,6 +17,7 @@ export interface MicStateSliceType {
     startRecording: () => void;
     stopRecording: () => void;
     pauseRecording: () => void;
+    resumeRecording: () => void;
 }
 
 export type MicStateType = MicStateSliceType;
