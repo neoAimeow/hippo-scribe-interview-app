@@ -1,31 +1,66 @@
-import { Text, View } from 'react-native';
-import MicButton from '../components/mic.button';
-import { useStateStore } from '../store';
-import PauseButton from '../components/pause.button';
-import StopButton from '../components/stop.button';
-import { RecordingStateEnum } from '../store/slice/type';
-import PlayButton from '../components/play.button';
+import { Pressable, Text, View } from 'react-native';
+import { useRecordStore } from '../store';
+import { RecordingStateEnum } from '../store/record-state/type';
+import OptionButton, { ButtonOption } from '../components/option.button';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import Ionicons from '@expo/vector-icons/Ionicons';
+import { useCallback, useEffect } from 'react';
+import { router } from 'expo-router';
+import dayjs from 'dayjs';
 
 export default function Home() {
-    const [recordingState, startRecording, stopRecording, pauseRecording, resumeRecording] = useStateStore(s => [
-        s.state.recordingState,
-        s.startRecording,
-        s.stopRecording,
-        s.pauseRecording,
-        s.resumeRecording,
-    ]);
+    const [recordingState, startRecording, stopRecording, pauseRecording, resumeRecording, timer] = useRecordStore(
+        s => [
+            s.state.recordingState,
+            s.startRecording,
+            s.stopRecording,
+            s.pauseRecording,
+            s.resumeRecording,
+            s.state.timer,
+        ],
+    );
+
+    const goList = useCallback(() => {
+        router.push('/list');
+    }, []);
+
+    useEffect(() => {
+        console.log(timer.getTimeRemaining());
+    }, []);
 
     return (
-        <View className={'w-full h-full flex items-center justify-center'}>
-            {recordingState === RecordingStateEnum.IDLE ? (
-                <MicButton onPress={startRecording} />
-            ) : (
-                <View className={'flex flex-row w-full justify-around'}>
-                    {recordingState === RecordingStateEnum.RECORDING && <PauseButton onPress={pauseRecording} />}
-                    {recordingState === RecordingStateEnum.PAUSED && <PlayButton onPress={resumeRecording} />}
-                    <StopButton onPress={stopRecording} />
+        <SafeAreaView>
+            <View className={'w-full h-full'}>
+                <View className={'w-full'}>
+                    <Pressable onPress={goList}>
+                        <View className={'ml-4'}>
+                            <Ionicons name="menu-outline" size={30} color={'white'}></Ionicons>
+                        </View>
+                    </Pressable>
                 </View>
-            )}
-        </View>
+                <View className={'w-full flex-grow flex items-center justify-center'}>
+                    <Text className={'text-3xl text-white'}>
+                        {/*{recordingState === RecordingStateEnum.RECORDING*/}
+                        {/*    ? dayjs(new Date()).diff(dayjs(countDownStartTime), 'second')*/}
+                        {/*    : '00:00'}*/}
+                    </Text>
+                    <View className={'mt-[30px]'}>
+                        {recordingState === RecordingStateEnum.IDLE ? (
+                            <OptionButton type={ButtonOption.MIC} onPress={startRecording} />
+                        ) : (
+                            <View className={'flex flex-row w-full justify-around'}>
+                                {recordingState === RecordingStateEnum.RECORDING && (
+                                    <OptionButton type={ButtonOption.PAUSE} onPress={pauseRecording} />
+                                )}
+                                {recordingState === RecordingStateEnum.PAUSED && (
+                                    <OptionButton type={ButtonOption.PLAY} onPress={resumeRecording} />
+                                )}
+                                <OptionButton type={ButtonOption.STOP} onPress={stopRecording} />
+                            </View>
+                        )}
+                    </View>
+                </View>
+            </View>
+        </SafeAreaView>
     );
 }

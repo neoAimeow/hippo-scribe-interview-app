@@ -5,9 +5,12 @@ import { initialState } from './state';
 import { MicStateType, RecordingStateEnum } from './type';
 import { Audio } from 'expo-av';
 import { Toast } from 'react-native-toast-notifications';
+import { router } from 'expo-router';
+import * as Crypto from 'expo-crypto';
+import { StoreType } from '../type';
 
 export const createStateSlice: StateCreator<
-    MicStateType,
+    StoreType,
     [['zustand/devtools', never], ['zustand/immer', never]],
     [],
     MicStateType
@@ -48,15 +51,19 @@ export const createStateSlice: StateCreator<
         const recording = get().state.recording;
         if (recording) {
             await recording.stopAndUnloadAsync();
-            set(draft => {
-                draft.state.recording = undefined;
-                draft.state.recordingState = RecordingStateEnum.IDLE;
-            });
+
             await Audio.setAudioModeAsync({
                 allowsRecordingIOS: false,
             });
-            const uri = recording.getURI();
+            const uri = recording.getURI() || '';
+            const digest = Crypto.randomUUID();
+            set(draft => {
+                draft.state.recording = undefined;
+                draft.state.recordingState = RecordingStateEnum.IDLE;
+                draft.addRecord({ id: digest, path: uri });
+            });
             console.log('Recording stopped and stored at', uri);
+            router.push({ pathname: '/detail', params: { id: digest } });
         }
     },
     pauseRecording: async () => {
