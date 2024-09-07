@@ -20,6 +20,5 @@ make ios
 *
 * In this project, I used zustand to manage the state for recording audios and the audio's list. with operations like
   starting and stopping the recording encapsulated within zustand's slices. This approach helps to better separate the
-  UI from the
-  logic.
+  UI from the logic.
 

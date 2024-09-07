@@ -4,7 +4,7 @@ import { RecordingStateEnum } from '../store/record-state/type';
 import OptionButton, { ButtonOption } from '../components/option.button';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Ionicons from '@expo/vector-icons/Ionicons';
-import { useCallback, useEffect } from 'react';
+import { useCallback } from 'react';
 import { router } from 'expo-router';
 import dayjs from 'dayjs';
 
