@@ -35,7 +35,7 @@ export default function AudioList() {
                 onPress={() => router.push({ pathname: '/detail', params: { id: item.id } })}
             >
                 <View className={'h-[50px] w-4/6 flex justify-center'}>
-                    <Text className={'truncate line-clamp-1'}>{item.id}</Text>
+                    <Text className={'truncate line-clamp-1 text-white'}>{item.id}</Text>
                 </View>
                 <Pressable
                     className={'bg-red-400 flex flex-row justify-center items-center h-[30px] w-[50px]'}
@@ -43,7 +43,7 @@ export default function AudioList() {
                         deleteFunc(item.id);
                     }}
                 >
-                    <Text>Delete</Text>
+                    <Text className={'text-white'}>Delete</Text>
                 </Pressable>
             </Pressable>
         );
@@ -52,7 +52,7 @@ export default function AudioList() {
     return (
         <View>
             <SafeAreaView>
-                <NavigatorHeader />
+                <NavigatorHeader title={'Record List'} />
                 <View className="w-full h-full">
                     <FlashList<z.infer<typeof recordSchema>>
                         data={list}

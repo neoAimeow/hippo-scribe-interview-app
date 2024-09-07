@@ -1,4 +1,4 @@
-import { Text, View, Image, Pressable, PixelRatio } from 'react-native';
+import { Text, View, Pressable } from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { noop } from 'lodash';
 import { router } from 'expo-router';
@@ -23,11 +23,11 @@ const NavigatorHeader = (props: z.infer<typeof navigatorProps>) => {
                     }
                 }}
             >
-                <Ionicons name="chevron-back-outline" size={25} />
+                <Ionicons name="chevron-back-outline" color={'white'} size={25} />
             </Pressable>
             {title && (
-                <View className="ml-2">
-                    <Text className="text-lg" numberOfLines={1}>
+                <View className="ml-2 w-4/6">
+                    <Text className="text-lg text-white line-clamp-1 truncate" numberOfLines={1}>
                         {title}
                     </Text>
                 </View>

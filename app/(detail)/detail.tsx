@@ -82,10 +82,10 @@ export default function AudioDetail() {
     return (
         <SafeAreaView>
             <View className={'flex flex-col'}>
-                <NavigatorHeader title={record?.path} />
+                <NavigatorHeader title={record?.id} />
                 <View className={'w-full h-full'}>
                     <View className={'w-full h-full flex items-center'}>
-                        <Text className={'mt-[30px]'}>{id}</Text>
+                        <Text className={'mt-[30px] text-white'}>{id}</Text>
                         <View className={'flex flex-row w-full mt-[30px] justify-around'}>
                             {state === PlayStateEnum.PLAYING ? (
                                 <OptionButton type={ButtonOption.PAUSE} onPress={pauseRecord} />
