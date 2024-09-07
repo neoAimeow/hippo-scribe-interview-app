@@ -3,7 +3,9 @@ import { View } from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { z } from 'zod';
 import { noop } from 'lodash';
-import { cn } from '../utils/cn';
+import { Audio } from 'expo-av';
+import { useToast } from 'react-native-toast-notifications';
+import { useState } from 'react';
 
 const propSchema = z.object({
     onPress: z.function(),
@@ -11,6 +13,8 @@ const propSchema = z.object({
 
 export default function MicButton(props: z.infer<typeof propSchema>) {
     const { onPress = noop } = props;
+    const [recording, setRecording] = useState<Audio.Recording>();
+    const toast = useToast();
 
     return (
         <Pressable onPress={onPress}>
