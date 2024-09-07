@@ -50,24 +50,24 @@ export default function AudioDetail() {
         if (!sound) {
             return;
         }
-        await sound.replayAsync();
         setState(PlayStateEnum.PLAYING);
+        await sound.replayAsync();
     }, [sound]);
 
     const stopRecord = useCallback(async () => {
         if (!sound) {
             return;
         }
-        await sound.stopAsync();
         setState(PlayStateEnum.IDLE);
+        await sound.stopAsync();
     }, [sound]);
 
     const pauseRecord = useCallback(async () => {
         if (!sound) {
             return;
         }
-        await sound.pauseAsync();
         setState(PlayStateEnum.PAUSED);
+        await sound.pauseAsync();
     }, [sound]);
 
     useEffect(() => {
